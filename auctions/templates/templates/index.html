@@ -1,0 +1,62 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    
+    {% if category_name %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'index' %}">Active Listings</a></li>
+          <li class="breadcrumb-item active" aria-current="page">{{category_name}}</li>
+        </ol>
+    </nav>
+    {% else %}
+        <h3>Active Listings</h3>         
+    {% endif %}
+ 
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for listing in listings %}
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                  <div class="col-md-4">
+                    <img src="{{ listing.image }}" class="img-fluid rounded-start" alt="...">
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h5 class="card-title">{{ listing.title }}</h5>
+                      <p class="card-text">{{ listing.description }}</p>
+                      <p class="card-text">Price: ${{ listing.price }}</p>
+                      <p class="card-text"><small class="text-muted">Owner: {{listing.owner}}</small></p>
+                      <a href="{% url 'listing' id=listing.id %}" class="btn btn-primary">View</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+    </div>
+    {% if not show_category %}
+      <h3>Sold Listings</h3>         
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for listing in nonactiveListing %}
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img src="{{ listing.image }}" class="img-fluid rounded-start" alt="...">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">{{ listing.title }}</h5>
+                  <p class="card-text">{{ listing.description }}</p>
+                  <p class="card-text">Sold: {{ listing.price }}</p>
+                  <p class="card-text"><small class="text-muted">Owner: {{listing.owner}}</small></p>
+                  <a href="{% url 'listing' id=listing.id %}" class="btn btn-primary">View</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+    {% endif %}
+</div>
+    
+    
+   
+{% endblock %}

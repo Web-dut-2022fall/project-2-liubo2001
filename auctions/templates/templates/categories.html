@@ -1,0 +1,17 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    <h2 style="color:rgb(9, 58, 9)"> Categories </h2>
+    {% for cat in categories %}   
+    <div class="mb-3">
+        <form action="{% url 'selected_category' %}" method="POST">
+            {% csrf_token %}   
+                <input type="hidden" name="category" value="{{ cat }}">          
+                <button type="submit" class="btn btn-success">{{cat}}</button>
+        </form>    
+    </div>  
+    
+    {% endfor %}
+  
+{% endblock %}
